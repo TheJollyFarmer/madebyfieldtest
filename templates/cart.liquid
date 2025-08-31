@@ -1,0 +1,11 @@
+{%- liquid
+  layout none
+
+  if cart.item_count
+    assign url = cart.items.first.product.url
+  else
+    assign url = routes.root_url
+  endif
+
+  render 'redirect', url: url
+-%}

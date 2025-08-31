@@ -1,0 +1,55 @@
+{
+  "name": "shopify-template",
+  "version": "2.0.0",
+  "description": "",
+  "author": "Field <studio@madebyfield.co.uk>",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev": "npm run build && npm-run-all --parallel \"watch\" \"shopify\"",
+    "shopify": "shopify theme dev --environment development",
+    "build": "shopify-parcel build",
+    "build:dev": "shopify-parcel build:dev",
+    "watch": "shopify-parcel watch",
+    "pull:theme": "shopify theme pull --environment production",
+    "pull:theme:dev": "shopify theme pull --environment development",
+    "pull:templates": "shopify theme pull --environment production --only=*.json",
+    "pull:templates:dev": "shopify theme pull --environment development --only=*.json",
+    "pull:metafields": "shopify theme metafields pull --environment production",
+    "pull:metafields:dev": "shopify theme metafields pull --environment development"
+  },
+  "shopify-parcel": {
+    "prefix": {
+      "development": "app-dev.",
+      "production": "app."
+    },
+    "entries": [
+      "src/*.{js,ts,css}",
+      "src/javascript/components/*.{js,ts}"
+    ]
+  },
+  "devDependencies": {
+    "@askphill/shopify-parcel": "*",
+    "@parcel/optimizer-cssnano": "*",
+    "@parcel/optimizer-terser": "*",
+    "@parcel/resolver-glob": "*",
+    "@parcel/watcher": "^2.5.1",
+    "@shopify/prettier-plugin-liquid": "*",
+    "@tailwindcss/aspect-ratio": "*",
+    "cssnano": "*",
+    "debounce": "*",
+    "intl-tel-input": "*",
+    "js-cookie": "*",
+    "npm-run-all": "*",
+    "postcss": "*",
+    "postcss-import": "*",
+    "postcss-import-ext-glob": "*",
+    "prettier": "*",
+    "tailwindcss": "3.4.17"
+  },
+  "browserslist": [
+    "defaults",
+    "> 1%",
+    "last 2 iOS versions"
+  ]
+}

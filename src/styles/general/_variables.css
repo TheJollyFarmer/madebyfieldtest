@@ -1,0 +1,55 @@
+:root {
+  --spacing-offset: 1.25rem; /* 20px */
+  --spacing-gutter: 2.5rem; /* 40px */
+  --spacing-gutter-sm: 0.125rem; /* 2px */
+
+  --color-black: 0, 0, 0; /* #000000 */
+  --color-grey: 119, 119, 119; /* #777777 */
+  --color-pale-grey: 180, 180, 180; /* #b4b4b4 */
+  --color-hairline: 220, 220, 220; /* #dcdcdc */
+  --color-white: 255, 255, 255; /* #ffffff */
+  --color-highlight: 0, 136, 68; /* #008844 */
+  --color-red: 183, 21, 21; /* #b71515 */
+
+  --text-heading-lg: 2.5rem; /* 40px */
+  --text-heading-md: 1.375rem; /* 22px */
+  --text-heading-sm: 0.875rem; /* 14px */
+  --text-heading-xs: 0.8125rem; /* 13px */
+
+  --text-scrolling: 9.375rem; /* 150px */
+  --text-scrolling-lg: 15.625rem; /* 250px */
+
+  --text-base: 1rem; /* 16px */
+  --text-md: 0.8125rem; /* 13px */
+  --text-sm: 0.75rem; /* 12px */
+  --text-xs: 0.6875rem; /* 11px */
+
+  --columns: 4;
+
+  --spacing-header: 3.875rem; /* 62px */
+  --spacing-announcement-banner: 1.875rem; /* 30px */
+  --spacing-mobile-nav: 3.25rem; /* 52px */
+  --spacing-details-nav: 3.75rem; /* 60px */
+  --spacing-cart-nav: 4rem; /* 64px */
+
+  --visual-viewport: 100vh;
+  --visual-area: calc(var(--visual-viewport) - var(--header-height, --spacing-header));
+}
+
+@media screen(tablet) {
+  :root {
+    --spacing-offset: 0.75rem; /* 12px */
+    --spacing-gutter: 0.125rem; /* 2px */
+    --spacing-gutter-lg: 0.75rem; /* 20px */
+
+    --text-heading-lg: 2rem; /* 32px */
+    --text-heading-md: 1rem; /* 16px */
+
+    --text-scrolling: 3.75rem; /* 60px */
+    --text-scrolling-lg: 7.5rem; /* 120px */
+
+    --columns: 2;
+
+    --spacing-header: 3.375rem; /* 54px */
+  }
+}

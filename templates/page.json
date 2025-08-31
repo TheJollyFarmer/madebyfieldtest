@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "page": {
+      "type": "page",
+      "settings": {
+        "page": "",
+        "show_title": true,
+        "contact_form": false,
+        "company": false,
+        "contact_heading": "",
+        "text_align": ""
+      }
+    }
+  },
+  "order": ["page"]
+}

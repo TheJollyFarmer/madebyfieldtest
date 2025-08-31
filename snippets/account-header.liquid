@@ -1,0 +1,12 @@
+{%- comment -%}
+  Renders a centered heading for account pages.
+  
+  @param {String} heading - The heading text to display
+  
+  @example
+    {%- render 'account-header', heading: 'My Account' -%}
+{%- endcomment -%}
+
+<div class="h1 text-center mt-2xl">
+  {{- heading -}}
+</div>

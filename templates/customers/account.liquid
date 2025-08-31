@@ -1,0 +1,146 @@
+{%- liquid
+  render 'account-header', heading: page_title
+
+  assign locale = shop.locale.iso_code
+  if locale == null
+    assign locale = localization.language.iso_code
+  endif
+  if locale == null
+    assign locale = request.locale.iso_code
+  endif
+  if routes.root_url == '/'
+    assign locale = null
+  endif
+-%}
+
+<div class="my-16 grid gap-gutter grid-cols-12 gap-y-0 tablet:block">
+  <div class="col-start-3 col-span-8">
+    <div class="h2 text-center mb-4 px-offset">
+      {{- 'customer.orders.title' | t -}}
+    </div>
+
+    <div class="rte">
+      {%- paginate customer.orders by 5 -%}
+        {%- if customer.orders.size > 0 -%}
+          <div class="rte-table text-center px-offset">
+            <table role="table">
+              <thead role="rowgroup">
+                <tr role="row">
+                  <th id="ColumnOrder" scope="col" role="columnheader">
+                    {{- 'customer.orders.order_number' | t -}}
+                  </th>
+                  <th id="ColumnDate" scope="col" role="columnheader">
+                    {{- 'customer.orders.date' | t -}}
+                  </th>
+                  <th id="ColumnPayment" scope="col" role="columnheader">
+                    {{- 'customer.orders.payment_status' | t -}}
+                  </th>
+                  <th id="ColumnFulfillment" scope="col" role="columnheader">
+                    {{- 'customer.orders.fulfillment_status' | t -}}
+                  </th>
+                  <th id="ColumnTotal" scope="col" role="columnheader">
+                    {{- 'customer.orders.total' | t -}}
+                  </th>
+                </tr>
+              </thead>
+              <tbody role="rowgroup" id="Orders">
+                {%- for order in customer.orders -%}
+                  <tr role="row">
+                    <td
+                      id="RowOrder"
+                      role="cell"
+                      headers="ColumnOrder"
+                      data-label="{{- 'customer.orders.order_number' | t -}}"
+                      class="rte"
+                    >
+                      <a
+                        href="{{- order.customer_url -}}"
+                        aria-label="{{- 'customer.orders.order_number_link' | t: number: order.name -}}"
+                        class="underline"
+                      >
+                        {{- order.name -}}
+                      </a>
+                    </td>
+                    <td
+                      headers="RowOrder ColumnDate"
+                      role="cell"
+                      data-label="{{- 'customer.orders.date' | t -}}"
+                    >
+                      {{- order.created_at | time_tag: format: 'date' -}}
+                    </td>
+                    <td
+                      headers="RowOrder ColumnPayment"
+                      role="cell"
+                      data-label="{{- 'customer.orders.payment_status' | t -}}"
+                    >
+                      {{- order.financial_status_label -}}
+                    </td>
+                    <td
+                      headers="RowOrder ColumnFulfillment"
+                      role="cell"
+                      data-label="{{ 'customer.orders.fulfillment_status' | t -}}"
+                    >
+                      {{- order.fulfillment_status_label -}}
+                    </td>
+                    <td
+                      headers="RowOrder ColumnTotal"
+                      role="cell"
+                      data-label="{{ 'customer.orders.total' | t }}"
+                    >
+                      {{- order.total_price | money_without_trailing_zeros -}}
+                    </td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+        {%- else -%}
+          <p class="text-center px-offset">
+            {{- 'customer.orders.none' | t -}}
+          </p>
+        {%- endif -%}
+
+        <div class="px-offset">
+          {%- liquid
+            if customer.orders_count > 0
+              render 'load-more-button', paginate: paginate
+            endif
+          -%}
+        </div>
+      {%- endpaginate -%}
+
+      <div class="px-offset flex flex-col items-center">
+        {%- comment -%}
+          <div class="h2 text-center mb-4 mt-8">
+            {{- 'customer.account.details' | t -}}
+          </div>
+
+          <div class="text-center">
+            {{- customer.default_address | format_address -}}
+
+            <a
+              href="{{- routes.account_addresses_url -}}"
+              class="button button--primary mt-xs inline-block"
+              aria-label="{{- 'customer.account.view_addresses' | t -}}"
+            >
+              {%- liquid
+                if customer.addresses_count > 0
+                  echo 'customer.account.view_addresses' | t
+                  echo ' (' | append: customer.addresses_count | append: ')'
+                else
+                  echo 'customer.addresses.add_new' | t
+                endif
+              -%}
+            </a>
+          </div>
+        {%- endcomment -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- liquid
+  if customer.orders.size > 0
+    render 'load-more-js', id: '#Orders'
+  endif
+-%}

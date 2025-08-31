@@ -1,0 +1,40 @@
+{%- comment -%}
+  Generates CSS custom properties for all color schemes defined in theme settings.
+  Creates CSS variables for background, text, buttons, and other theme colors.
+  
+  This snippet automatically outputs:
+  - Background, contrast, text, links, icons, border colors
+  - Primary and secondary button colors with hover states
+  - CSS classes for each color scheme
+  
+  @example
+    {% render 'color-schemes' %}
+{%- endcomment -%}
+
+<style>
+  {% for scheme in settings.color_schemes %}
+    {% if forloop.first %}body,{% endif %}
+    .color-{{ scheme.id }} {
+      --background: {{ scheme.settings.background | default: 'transparent' }};
+      --contrast: {{ scheme.settings.contrast | default: 'transparent' }};
+      --text: {{ scheme.settings.text }};
+      --links: {{ scheme.settings.links }};
+      --icons: {{ scheme.settings.icons }};
+      --border: {{ scheme.settings.border }};
+
+      --primary-button-background: {{ scheme.settings.primary_button_background | default: 'transparent' }};
+      --primary-button-border: {{ scheme.settings.primary_button_border | default: 'transparent' }};
+      --primary-button-text: {{ scheme.settings.primary_button_text | default: 'var(--text)' }};
+      --primary-button-background-hover: {{ scheme.settings.primary_button_background_hover | default: 'transparent' }};
+      --primary-button-border-hover: {{ scheme.settings.primary_button_border_hover | default: 'transparent' }};
+      --primary-button-text-hover: {{ scheme.settings.primary_button_text_hover | default: scheme.settings.primary_button_text }};
+
+      --secondary-button-background: {{ scheme.settings.secondary_button_background | default: 'transparent' }};
+      --secondary-button-border: {{ scheme.settings.secondary_button_border | default: 'transparent' }};
+      --secondary-button-text: {{ scheme.settings.secondary_button_text | default: 'var(--text)' }};
+      --secondary-button-background-hover: {{ scheme.settings.secondary_button_background_hover | default: 'transparent' }};
+      --secondary-button-border-hover: {{ scheme.settings.secondary_button_border_hover | default: 'transparent' }};
+      --secondary-button-text-hover: {{ scheme.settings.secondary_button_text_hover | default: scheme.settings.secondary_button_text }};
+    }
+  {% endfor %}
+</style>

@@ -1,0 +1,91 @@
+{%- assign page = section.settings.page | default: page -%}
+
+<div class="mt-8 mb-16 px-offset grid gap-gutter grid-cols-12 tablet:block">
+  <div class="col-start-3 col-span-8 rte {{ section.settings.text_align }}">
+    {%- if section.settings.show_title -%}
+      <h1>{{- page.title -}}</h1>
+    {%- endif -%}
+    {%- liquid
+      echo page.content
+      if section.settings.contact_form
+        render 'contact-form', company: section.settings.company, heading: section.settings.contact_heading
+      endif
+    -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "page",
+      "id": "page",
+      "label": "Page",
+      "info": "Leave blank for an actual page."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show title?",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Contact form"
+    },
+    {
+      "type": "checkbox",
+      "id": "contact_form",
+      "label": "Show contact form?"
+    },
+    {
+      "type": "checkbox",
+      "id": "company",
+      "label": "Show company field?"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text align",
+      "options": [
+        {
+          "label": "Default",
+          "value": ""
+        },
+        {
+          "label": "Left",
+          "value": "text-left"
+        },
+        {
+          "label": "Center",
+          "value": "text-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-right"
+        },
+        {
+          "label": "Justify",
+          "value": "text-justify"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page"
+    }
+  ]
+}
+{% endschema %}

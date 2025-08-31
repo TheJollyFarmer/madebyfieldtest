@@ -1,0 +1,44 @@
+<!doctype html>
+<html
+  lang="{{- request.locale.iso_code -}}"
+  class="no-js{% unless template.directory == blank or template.directory == template.name %} template-{{ template.directory }}{% endunless %} template-{{ template.name }}"
+>
+  <head>
+    {%- render 'head' -%}
+    {{ content_for_header }}
+  </head>
+
+  <body class="min-h-screen font-sans text-base {% render 'color-scheme', color_scheme: settings.default_color_scheme %}">
+    <a href="#Content" class="sr-only">
+      {{- 'accessibility.skip_to_text' | t -}}
+    </a>
+
+    {%- sections 'header-group' -%}
+
+    <main id="Content">
+      {{ content_for_layout }}
+
+      {%- capture prefix -%}{%- render 'asset-prefix' -%}{%- endcapture -%}
+      <script
+        src="{{- 'custom-component.js' | prepend: prefix | asset_url -}}"
+        type="module"
+        defer
+      ></script>
+      <custom-component>
+        I am an example component. This is the format to create a custom component. All components
+        within `src/javascript/components` will be bundled into the `assets` folder.
+      </custom-component>
+    </main>
+
+    {%- liquid
+      sections 'footer-group'
+    -%}
+
+    {%- capture prefix -%}{%- render 'asset-prefix' -%}{%- endcapture -%}
+    <script
+      src="{{- 'main.js' | prepend: prefix | asset_url -}}"
+      type="module"
+      defer
+    ></script>
+  </body>
+</html>

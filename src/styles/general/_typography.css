@@ -1,0 +1,116 @@
+@layer base {
+  *,
+  *::before,
+  *::after {
+    font-display: swap;
+    @apply antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+    font-variant-ligatures: none;
+    -webkit-font-variant-ligatures: none;
+  }
+
+  .rte {
+    @apply font-sans;
+    @apply text-pretty;
+    @apply leading-normal;
+  }
+
+  .rte a:not([class*='button']):not([href^='tel:']) {
+    @apply text-scheme-links;
+    @apply underline;
+    @apply hover:no-underline;
+    @apply text-md;
+  }
+
+  .rte :is(h1, h2, h3, h4, h5, h6),
+  .shopify-policy__container :is(h1, h2, h3, h4, h5, h6),
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  .text-heading-lg,
+  .text-heading-md,
+  .text-heading-sm,
+  .text-heading-xs {
+    @apply font-sans;
+    @apply font-normal;
+    @apply text-scheme-links;
+    @apply leading-normal;
+  }
+
+  .text-md,
+  .text-sm,
+  .text-xs {
+    @apply font-sans;
+    @apply font-normal;
+    @apply leading-normal;
+  }
+
+  .rte :is(h1),
+  .shopify-policy__container :is(h1),
+  .h1 {
+    @apply text-heading-lg;
+    @apply leading-tight;
+    @apply font-serif;
+  }
+  .text-heading-lg {
+    @apply leading-tight;
+    @apply font-serif;
+  }
+
+  .rte :is(h2),
+  .shopify-policy__container :is(h2),
+  .h2 {
+    @apply text-heading-md;
+    @apply leading-snug;
+  }
+  .text-heading-md {
+    @apply leading-snug;
+  }
+
+  .rte :is(h3, h4, h5, h6),
+  .shopify-policy__container :is(h3, h4, h5, h6),
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    @apply text-heading-sm;
+  }
+
+  .shopify-policy__container
+    :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, img, video):not(:last-child),
+  .rte :is(p, h1, h2, h3, h4, h5, h6, ul, ol, blockquote, img, video):not(:last-child) {
+    @apply mb-4;
+  }
+
+  .shopify-policy__container ul,
+  .shopify-policy__container ol,
+  .rte ul:not(.flex),
+  .rte ol:not(.flex) {
+    @apply list-outside;
+    margin-left: 0.6em;
+    padding-left: 0.6em;
+  }
+
+  .shopify-policy__container ul li,
+  .rte ul li {
+    @apply list-disc;
+  }
+
+  .shopify-policy__container ol li,
+  .rte ol li {
+    @apply list-decimal;
+  }
+
+  cite {
+    @apply not-italic;
+  }
+
+  b,
+  strong {
+    @apply font-normal;
+  }
+}

@@ -1,0 +1,8 @@
+@layer components {
+  .form-field {
+    @apply appearance-none;
+    @apply transition-colors;
+    @apply leading-none;
+    @apply tablet:text-[16px];
+  }
+}

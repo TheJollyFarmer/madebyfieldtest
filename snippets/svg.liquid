@@ -1,0 +1,31 @@
+{%- comment -%}
+  Renders SVG icons with customizable styling.
+  
+  @param {String} svg - Name of the SVG icon to render
+  @param {String} class - CSS classes to apply to the SVG (default: 'max-w-full')
+  
+  @example
+    {%- render 'svg', svg: 'share', class: 'w-6 h-6 text-gray-500' -%}
+  
+  Available icons:
+  - share: Upload/share icon
+{%- endcomment -%}
+
+{%- liquid
+  assign svg = svg | default: blank
+  assign class = class | default: blank | append: ' max-w-full'
+-%}
+
+{%- case svg -%}
+  {%- when 'share' -%}
+    <svg
+      class="{{ class }}"
+      role="presentation"
+      viewBox="0 0 15 15"
+      width="15"
+      height="15"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g fill="none" fill-rule="evenodd"><path stroke="currentColor" d="M.5 5.5h14v9H.5z"/><path stroke="#FFF" d="M1.5 5.5h12v1h-12z"/><path d="m7.505.701 2.838 2.828-.707.707L8 2.601V11H7V2.62L5.384 4.236l-.707-.707L7.505.701z" fill="currentColor"/></g>
+    </svg>
+{%- endcase -%}

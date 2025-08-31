@@ -1,0 +1,46 @@
+{%- comment -%}
+  Renders a video element with customizable playback settings and fallback image.
+  
+  @param {Object} video - Video object to render
+  @param {String} loading - Loading strategy: 'lazy' or 'eager' (default: 'lazy')
+  @param {String} image_size - Size for the video thumbnail (default: '720x')
+  @param {String} class - CSS classes to apply to the video element (default: '')
+  @param {Boolean} muted - Whether video should be muted (default: false)
+  @param {Boolean} autoplay - Whether video should autoplay (default: false)
+  @param {Boolean} controls - Whether to show video controls (default: false)
+  
+  @example
+    {%- render 'video', 
+        video: section.settings.video,
+        class: 'hero-video',
+        autoplay: true,
+        muted: true,
+        controls: false -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign loading = loading | default: 'lazy'
+  assign image_size = image_size | default: '720x'
+  assign class = class | default: blank
+  assign muted = muted | default: false, allow_false: true
+  assign autoplay = autoplay | default: false, allow_false: true
+  assign controls = controls | default: false, allow_false: true
+
+  capture output
+    if autoplay
+      echo video | video_tag: image_size: image_size, controls: controls, autoplay: autoplay, muted: true, loop: true, playsinline: true, loading: loading, class: class
+    else
+      echo video | video_tag: image_size: image_size, controls: controls, autoplay: autoplay, muted: muted, loop: true, playsinline: true, loading: loading, class: class
+    endif
+  endcapture
+
+  assign alt = video.alt | default: 'Video placeholder' | escape
+  assign replacer = '<img loading="lazy" alt="' | append: alt | append: '" '
+  assign output = output | replace: '<img ', replacer
+
+  if autoplay
+    echo output
+  else
+    render 'video-player', video: output
+  endif
+-%}

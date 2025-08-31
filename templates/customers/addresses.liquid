@@ -1,0 +1,303 @@
+{%- render 'account-header', heading: page_title -%}
+
+<div class="my-16 px-offset grid gap-gutter grid-cols-12 gap-y-0 tablet:block">
+  <div class="rte col-start-5 col-span-4">
+    {%- paginate customer.addresses by 5 -%}
+      <div id="Addresses">
+        {%- for address in customer.addresses -%}
+          <div class="mb-md">
+            <div class="text-center">
+              {{- address | format_address -}}
+
+              <div class="flex gap-gutter">
+                <button
+                  aria-label="{{- 'customer.addresses.edit' | t -}}"
+                  class="button button--primary flex-1 basis-1/2"
+                  data-edit="{{- address.id -}}"
+                >
+                  {{- 'customer.addresses.edit' | t -}}
+                </button>
+                <form
+                  class="flex-1 basis-1/2 block"
+                  method="post"
+                  action="{{- routes.account_addresses_url -}}/{{ address.id }}"
+                >
+                  <input type="hidden" name="_method" value="delete">
+                  <button
+                    type="submit"
+                    aria-label="{{- 'customer.addresses.delete' | t -}}"
+                    class="button--secondary w-full"
+                  >
+                    {{- 'customer.addresses.delete' | t -}}
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <div id="EditAddress_{{ address.id }}" class="hidden">
+              <div class="h2 mt-4">
+                {{- 'customer.addresses.edit_address' | t -}}
+              </div>
+
+              {%- form 'customer_address', address -%}
+                <input
+                  class="input my-4 block w-full"
+                  type="text"
+                  id="AddressFirstName_{{- form.id -}}"
+                  name="address[first_name]"
+                  value="{{- form.first_name -}}"
+                  autocomplete="given-name"
+                  placeholder="{{- 'customer.addresses.first_name' | t -}}"
+                >
+                <input
+                  class="input my-4 block w-full"
+                  type="text"
+                  id="AddressLastName_{{- form.id -}}"
+                  name="address[last_name]"
+                  value="{{- form.last_name -}}"
+                  autocomplete="family-name"
+                  placeholder="{{- 'customer.addresses.last_name' | t -}}"
+                >
+                <input
+                  class="input my-4 block w-full"
+                  type="text"
+                  id="AddressCompany_{{- form.id -}}"
+                  name="address[company]"
+                  value="{{- form.company -}}"
+                  autocomplete="organization"
+                  placeholder="{{- 'customer.addresses.company' | t -}}"
+                >
+                <input
+                  class="input my-4 block w-full"
+                  type="text"
+                  id="AddressAddress1_{{- form.id -}}"
+                  name="address[address1]"
+                  value="{{- form.address1 -}}"
+                  autocomplete="address-line1"
+                  placeholder="{{- 'customer.addresses.address1' | t -}}"
+                >
+                <input
+                  class="input my-4 block w-full"
+                  type="text"
+                  id="AddressAddress2_{{- form.id -}}"
+                  name="address[address2]"
+                  value="{{- form.address2 -}}"
+                  autocomplete="address-line2"
+                  placeholder="{{- 'customer.addresses.address2' | t -}}"
+                >
+                <input
+                  class="input my-4 block w-full"
+                  type="text"
+                  id="AddressCity_{{- form.id -}}"
+                  name="address[city]"
+                  value="{{- form.city -}}"
+                  autocomplete="address-level2"
+                  placeholder="{{- 'customer.addresses.city' | t -}}"
+                >
+                <select
+                  class="select my-4 block w-full"
+                  id="AddressProvince_{{- form.id -}}"
+                  name="address[province]"
+                  data-default="{{- form.province -}}"
+                  autocomplete="address-level1"
+                  style="display:none;"
+                ></select>
+                <select
+                  class="select my-4 block w-full"
+                  id="AddressCountry_{{- form.id -}}"
+                  name="address[country]"
+                  data-address-country-select
+                  data-default="{{- form.country }}"
+                  data-form-id="{{- form.id -}}"
+                  autocomplete="country"
+                >
+                  {{ all_country_option_tags }}
+                </select>
+                <input
+                  class="input my-4 block w-full"
+                  type="text"
+                  id="AddressZip_{{- form.id -}}"
+                  name="address[zip]"
+                  value="{{- form.zip }}"
+                  autocapitalize="characters"
+                  autocomplete="postal-code"
+                  placeholder="{{- 'customer.addresses.zip' | t -}}"
+                >
+                <input
+                  class="input my-4 block w-full"
+                  type="tel"
+                  id="AddressPhone_{{- form.id -}}"
+                  name="address[phone]"
+                  value="{{- form.phone -}}"
+                  autocomplete="tel"
+                  placeholder="{{- 'customer.addresses.phone' | t -}}"
+                >
+
+                <label class="group flex items-center gap-xs cursor-pointer my-4">
+                  {{-
+                    form.set_as_default_checkbox
+                    | replace: '<input ', '<input class="hidden peer" '
+                  -}}
+                  <span class="checkbox}"></span>
+                  <span>
+                    {{- 'customer.addresses.set_default' | t -}}
+                  </span>
+                </label>
+
+                <div class="flex gap-gutter">
+                  <button
+                    type="submit"
+                    aria-label="{{- 'customer.addresses.add' | t -}}"
+                    class="button button--primary flex-1"
+                  >
+                    {{- 'customer.addresses.update' | t -}}
+                  </button>
+                  <button
+                    aria-label="{{- 'customer.addresses.cancel' | t -}}"
+                    class="button--secondary flex-1"
+                    type="reset"
+                    data-cancel
+                  >
+                    {{- 'customer.addresses.cancel' | t -}}
+                  </button>
+                </div>
+              {%- endform -%}
+            </div>
+          </div>
+        {%- else -%}
+          <p class="text-center">
+            {{- 'customer.addresses.none' | t -}}
+          </p>
+        {%- endfor -%}
+      </div>
+
+      {%- liquid
+        if customer.addresses_count > 0
+          render 'load-more-button', paginate: paginate
+        endif
+      -%}
+    {%- endpaginate -%}
+
+    <div class="h2 text-center mb-4 mt-8">
+      {{- 'customer.addresses.add_new' | t -}}
+    </div>
+
+    {%- form 'customer_address', customer.new_address, aria-labelledBy: 'AddressNewHeading' -%}
+      <input
+        class="input my-4 block w-full"
+        type="text"
+        id="AddressFirstNameNew"
+        name="address[first_name]"
+        value="{{- form.first_name -}}"
+        autocomplete="given-name"
+        placeholder="{{- 'customer.addresses.first_name' | t -}}"
+      >
+      <input
+        class="input my-4 block w-full"
+        type="text"
+        id="AddressLastNameNew"
+        name="address[last_name]"
+        value="{{- form.last_name -}}"
+        autocomplete="family-name"
+        placeholder="{{- 'customer.addresses.last_name' | t -}}"
+      >
+      <input
+        class="input my-4 block w-full"
+        type="text"
+        id="AddressCompanyNew"
+        name="address[company]"
+        value="{{- form.company -}}"
+        autocomplete="organization"
+        placeholder="{{- 'customer.addresses.company' | t -}}"
+      >
+      <input
+        class="input my-4 block w-full"
+        type="text"
+        id="AddressAddress1New"
+        name="address[address1]"
+        value="{{- form.address1 -}}"
+        autocomplete="address-line1"
+        placeholder="{{- 'customer.addresses.address1' | t -}}"
+      >
+      <input
+        class="input my-4 block w-full"
+        type="text"
+        id="AddressAddress2New"
+        name="address[address2]"
+        value="{{- form.address2 -}}"
+        autocomplete="address-line2"
+        placeholder="{{- 'customer.addresses.address2' | t -}}"
+      >
+      <input
+        class="input my-4 block w-full"
+        type="text"
+        id="AddressCityNew"
+        name="address[city]"
+        value="{{- form.city -}}"
+        autocomplete="address-level2"
+        placeholder="{{- 'customer.addresses.city' | t -}}"
+      >
+      <select
+        class="select my-4 block w-full"
+        id="AddressProvinceNew"
+        name="address[province]"
+        data-default="{{- form.province -}}"
+        autocomplete="address-level1"
+        style="display:none"
+      ></select>
+      <select
+        class="select my-4 block w-full"
+        id="AddressCountryNew"
+        name="address[country]"
+        data-default="{{- form.country -}}"
+        autocomplete="country"
+      >
+        {{ all_country_option_tags }}
+      </select>
+      <input
+        class="input my-4 block w-full"
+        type="text"
+        id="AddressZipNew"
+        name="address[zip]"
+        value="{{- form.zip }}"
+        autocapitalize="characters"
+        autocomplete="postal-code"
+        placeholder="{{- 'customer.addresses.zip' | t -}}"
+      >
+      <input
+        class="input my-4 block w-full"
+        type="tel"
+        id="AddressPhoneNew"
+        name="address[phone]"
+        value="{{- form.phone -}}"
+        autocomplete="tel"
+        placeholder="{{- 'customer.addresses.phone' | t -}}"
+      >
+
+      <label class="group flex items-center gap-xs cursor-pointer my-4">
+        {{- form.set_as_default_checkbox | replace: '<input ', '<input class="hidden peer" ' -}}
+        <span class="checkbox"></span>
+        <span>
+          {{- 'customer.addresses.set_default' | t -}}
+        </span>
+      </label>
+
+      <button
+        type="submit"
+        aria-label="{{ 'customer.addresses.add' | t -}}"
+        class="button button--primary w-full"
+        data-add
+      >
+        {{- 'customer.addresses.add' | t -}}
+      </button>
+    {%- endform -%}
+  </div>
+
+  {%- render 'account-return' -%}
+</div>
+
+{%- liquid
+  if customer.addresses.size > 0
+    render 'load-more-js', id: '#Addresses'
+  endif
+-%}

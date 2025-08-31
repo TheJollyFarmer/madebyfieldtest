@@ -1,0 +1,10 @@
+{%- comment -%}
+  Outputs CSS class names for a color scheme.
+  
+  @param {String} color_scheme - ID of the color scheme to apply
+  
+  @example
+    <section class="{%- render 'color-scheme', color_scheme: 'scheme-2' -%}">
+{%- endcomment -%}
+
+color-{{ color_scheme }} bg-scheme-background text-scheme-text

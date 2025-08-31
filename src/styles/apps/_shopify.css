@@ -1,0 +1,59 @@
+body .shopify-policy__container {
+  @apply max-w-full;
+  @apply px-offset;
+  @apply tablet:block;
+  @apply grid;
+  @apply gap-gutter;
+  @apply grid-cols-12;
+  /*
+  @apply my-16;
+  */
+}
+
+body .shopify-policy__title,
+body .shopify-policy__body {
+  @apply col-start-3;
+  @apply col-end-11;
+}
+
+body .shopify-policy__title {
+  @apply text-center;
+  @apply uppercase;
+  @apply tracking-widest;
+  /*
+  @apply h1;
+  @apply tablet:mb-md;
+  */
+}
+
+body .shopify-policy__body {
+  @apply rte;
+}
+
+body #shopify-privacy-banner-div button.accept,
+body #shopify-privacy-banner-div button.decline {
+  @apply mt-0;
+}
+
+body #shopify-privacy-banner-button-div {
+  @apply justify-start;
+  /*
+  @apply tablet:mt-4;
+  */
+}
+
+/* Buttons */
+body .shopify-challenge__button,
+body #shopify-privacy-banner-div button.accept,
+body #shopify-privacy-banner-div button.decline {
+  @apply button;
+}
+
+/* Primary Button */
+body .shopify-challenge__button,
+body #shopify-privacy-banner-div button.accept {
+}
+
+/* Secondary Button */
+body #shopify-privacy-banner-div button.decline {
+}

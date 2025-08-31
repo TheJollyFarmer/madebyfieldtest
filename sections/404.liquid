@@ -1,0 +1,30 @@
+<div class="my-16 px-offset grid gap-gutter grid-cols-12 tablet:block">
+  <div class="col-start-3 col-span-8 text-center">
+    <h1 class="h1 mb-4">
+      {{- '404.title' | t -}}
+    </h1>
+    <p class="text-black-60 mb-4">
+      {{- '404.body' | t -}}
+    </p>
+    <p>
+      <a
+        href="{{- routes.all_products_collection_url -}}"
+        class="inline-block button button--primary"
+      >
+        {{- 'general.continue_shopping' | t -}}
+      </a>
+    </p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404",
+  "tag": "div",
+  "presets": [
+    {
+      "name": "404"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,58 @@
+{%- render 'account-header', heading: page_title -%}
+
+<div class="my-16 px-offset grid gap-gutter grid-cols-12 tablet:block">
+  <div class="rte col-start-5 col-span-4">
+    {%- form 'create_customer', novalidate: 'novalidate' -%}
+      {%- render 'form-errors', form: form -%}
+      <input
+        class="input my-4 block w-full"
+        type="text"
+        name="customer[first_name]"
+        {% if form.first_name %}
+          value="{{- form.first_name -}}"
+        {% endif %}
+        autocomplete="given-name"
+        placeholder="{{- 'customer.register.first_name' | t -}}"
+        required
+      >
+      <input
+        class="input my-4 block w-full"
+        type="text"
+        name="customer[last_name]"
+        {% if form.last_name %}
+          value="{{- form.last_name -}}"
+        {% endif %}
+        autocomplete="family-name"
+        placeholder="{{- 'customer.register.last_name' | t -}}"
+        required
+      >
+      <input
+        class="input my-4 block w-full"
+        type="email"
+        name="customer[email]"
+        {% if form.email %}
+          value="{{- form.email -}}"
+        {% endif %}
+        spellcheck="false"
+        autocapitalize="off"
+        autocomplete="email"
+        placeholder="{{- 'customer.register.email' | t -}}"
+        required
+      >
+      <input
+        class="input my-4 block w-full"
+        type="password"
+        name="customer[password]"
+        placeholder="{{ 'customer.register.password' | t }}"
+        required
+      >
+      <button
+        type="submit"
+        class="button button--primary"
+        aria-label="{{- 'customer.register.submit' | t -}}"
+      >
+        {{- 'customer.register.submit' | t -}}
+      </button>
+    {%- endform -%}
+  </div>
+</div>

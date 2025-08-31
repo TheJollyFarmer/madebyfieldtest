@@ -1,0 +1,79 @@
+{%- comment -%}
+  Renders a contact form with fields for name, email, phone, company, and message.
+  Includes success state and error handling.
+  
+  @param {String} heading - Optional heading text to display above the form
+  @param {Boolean} company - Whether to include company field (default: false)
+  @param {Boolean} phone - Whether to include phone field (default: false)
+  
+  @example
+    {%- render 'contact-form', 
+        heading: 'Get in Touch',
+        company: true,
+        phone: true -%}
+{%- endcomment -%}
+
+{%- assign heading = heading | default: blank -%}
+
+{%- form 'contact' -%}
+  {% if form.posted_successfully? %}
+    <p class="h3 mb-4">
+      {{- 'contact.success' | t -}}
+    </p>
+  {% else %}
+    {%- unless heading == blank -%}
+      <p class="h3 mb-4">
+        {{- heading -}}
+      </p>
+    {%- endunless -%}
+    {%- render 'form-errors', form: form, class: 'mb-4' -%}
+    <input
+      class="input block w-full my-2xs"
+      type="text"
+      name="contact[first_name]"
+      placeholder="{{- 'contact.first_name' | t | escape -}}"
+    >
+    <input
+      class="input block w-full my-2xs"
+      type="text"
+      name="contact[last_name]"
+      placeholder="{{- 'contact.last_name' | t | escape -}}"
+    >
+    {%- if company -%}
+      <input
+        class="input block w-full my-2xs"
+        type="text"
+        name="contact[company]"
+        placeholder="{{- 'contact.company' | t | escape -}}"
+      >
+    {%- endif -%}
+    <input
+      class="input block w-full my-2xs"
+      type="email"
+      name="contact[email]"
+      placeholder="{{- 'contact.email' | t | escape -}}"
+    >
+    <div>
+      <input
+        class="input block w-full my-2xs"
+        type="tel"
+        name="contact[phone]"
+        placeholder="{{- 'contact.phone' | t | escape -}}"
+      >
+    </div>
+    <textarea
+      class="input block w-full my-2xs"
+      name="contact[body]"
+      placeholder="{{- 'contact.message' | t | escape -}}"
+      rows="5"
+    ></textarea>
+    <button
+      type="submit"
+      class="button button--primary my-2xs"
+    >
+      {{- 'contact.send' | t -}}
+    </button>
+  {% endif %}
+{%- endform -%}
+
+{%- render 'intl-tel-input' -%}

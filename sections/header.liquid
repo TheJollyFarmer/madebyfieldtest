@@ -1,0 +1,71 @@
+{%- if request.page_type == 'index' -%}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      {% if page_description %}
+        "description": {{ page_description | json }},
+      {% endif %}
+      "email": {{ shop.email | json }},
+      {% if settings.favicon != blank %}
+      "image": {{ settings.favicon | image_url: width: 192, height: 192 | json }},
+      "logo": {{ settings.favicon | image_url: width: 192, height: 192 | json }},
+      {% endif %}
+      "sameAs": [
+        {% liquid
+          assign networks = 'facebook,instagram,tiktok,youtube,pinterest' | split: ','
+          for network in networks
+            assign key = 'social_' | append: network
+            unless settings[key] == blank
+              echo settings[key] | json
+              unless forloop.last
+                echo ','
+              endunless
+            endunless
+          endfor
+        %}
+      ],
+      "url": {{ shop.url | json }}
+    }
+  </script>
+{%- endif -%}
+
+{%- if request.page_type == 'index' -%}
+  {% assign potential_action_target = shop.url
+    | append: routes.search_url
+    | append: '?q={search_term_string}'
+  %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      {% if settings.favicon != blank %}
+      "image": {{ settings.favicon | image_url: width: 192, height: 192 | json }},
+      "logo": {{ settings.favicon | image_url: width: 192, height: 192 | json }},
+      {% endif %}
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ potential_action_target | json }},
+        "query-input": "required name=search_term_string"
+      },
+      "url": {{ shop.url | json }}
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,39 @@
+<div class="my-16 px-offset grid gap-gutter grid-cols-12 tablet:block">
+  <div class="rte col-start-5 col-span-4 text-center">
+    <div class="h2 mb-4">
+      {{- 'customer.activate_account.title' | t -}}
+    </div>
+
+    <p class="mb-4">
+      {{- 'customer.activate_account.subtext' | t -}}
+    </p>
+
+    {%- form 'activate_customer_password' -%}
+      {%- render 'form-errors', form: form -%}
+      <div class="flex gap-gutter tablet:flex-col">
+        <input
+          class="input flex-1"
+          type="password"
+          name="customer[password]"
+          autocomplete="new-password"
+          placeholder="{{ 'customer.activate_account.password' | t }}"
+        >
+        <input
+          class="input flex-1"
+          type="password"
+          name="customer[password_confirmation]"
+          id="password_confirmation"
+          autocomplete="new-password"
+          placeholder="{{ 'customer.activate_account.password_confirm' | t }}"
+        >
+      </div>
+      <button
+        type="submit"
+        class="button button--primary mt-xs"
+        aria-label="{{- 'customer.activate_account.submit' | t -}}"
+      >
+        {{- 'customer.activate_account.submit' | t -}}
+      </button>
+    {%- endform -%}
+  </div>
+</div>

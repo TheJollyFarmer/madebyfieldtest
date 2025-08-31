@@ -1,0 +1,116 @@
+{%- comment -%}
+  Renders a customer login form with email/password fields and forgot password link.
+  Includes responsive grid layout and proper form validation.
+
+  This snippet provides:
+  - Email and password input fields
+  - Forgot password functionality
+  - Login button
+  - Registration link
+  - Form error handling
+
+  @example
+    {%- render 'account-login' -%}
+{%- endcomment -%}
+
+<div class="my-16 px-offset grid gap-gutter grid-cols-12 tablet:block">
+  <div class="col-start-5 col-span-4">
+    <div class="h2 text-center mb-4">
+      {{- 'customer.login_page.title' | t -}}
+    </div>
+
+    {%- form 'customer_login', novalidate: 'novalidate' -%}
+      {%- render 'form-errors', form: form -%}
+
+      <input
+        type="email"
+        name="customer[email]"
+        autocomplete="email"
+        autocorrect="off"
+        autocapitalize="off"
+        placeholder="{{- 'customer.login_page.email' | t | escape -}}"
+        class="input block w-full"
+      >
+      {%- if form.password_needed -%}
+        <input
+          type="password"
+          name="customer[password]"
+          autocomplete="current-password"
+          placeholder="{{- 'customer.login_page.password' | t | escape -}}"
+          class="input block w-full mt-xs"
+        >
+      {%- endif -%}
+
+      <div class="flex justify-between gap-gutter mt-xs">
+        <div>
+          <button
+            type="submit"
+            class="button button--primary"
+            aria-label="{{- 'customer.login_page.sign_in' | t | escape -}}"
+          >
+            {{- 'customer.login_page.sign_in' | t -}}
+          </button>
+        </div>
+        <a
+          href="{{- routes.account_register_url -}}"
+          class="button button--secondary"
+          aria-label="{{- 'customer.login_page.create_account' | t | escape -}}"
+        >
+          {{- 'customer.login_page.create_account' | t -}}
+        </a>
+      </div>
+    {%- endform -%}
+
+    {%- if shop.checkout.guest_login -%}
+      {%- form 'guest_login', class: 'mt-xs' -%}
+        <button
+          type="submit"
+          class="button button--primary w-full"
+          aria-label="{{- 'customer.login_page.guest_continue' | t | escape -}}"
+        >
+          {{- 'customer.login_page.guest_title' | t -}}
+        </button>
+      {%- endform -%}
+    {%- endif -%}
+  </div>
+
+  <div class="col-start-5 col-span-4 pt-xl">
+    <div class="h2 text-center mb-4">
+      {{- 'customer.login_page.forgot_password' | t -}}
+    </div>
+
+    {%- form 'recover_customer_password', class: 'text-center' -%}
+      {%- if form.posted_successfully? -%}
+        <p>
+          {{- 'customer.recover_password.success' | t -}}
+        </p>
+      {%- else -%}
+        <p class="mb-4">
+          {{- 'customer.recover_password.subtext' | t -}}
+        </p>
+
+        {%- render 'form-errors', form: form -%}
+
+        <div class="flex gap-xs">
+          <input
+            type="email"
+            value="{{- customer.email -}}"
+            name="email"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            placeholder="{{- 'customer.login_page.email' | t | escape -}}"
+            class="input flex-1"
+          >
+          <button
+            type="submit"
+            class="button button--primary"
+            aria-label="{{- 'customer.login_page.submit' | t | escape -}}"
+          >
+            {{- 'customer.login_page.submit' | t -}}
+          </button>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</div>

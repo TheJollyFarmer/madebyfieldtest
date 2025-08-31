@@ -1,0 +1,298 @@
+{%- comment -%}
+  Renders the HTML head section with meta tags, preloads, and stylesheets.
+  Includes theme colors, SEO meta tags, favicon, and essential assets.
+
+  This snippet automatically handles:
+  - Basic meta tags (charset, viewport, format-detection)
+  - Theme color from settings
+  - Robots meta tag with noindex conditions
+  - Canonical URL
+  - Author attribution
+  - Asset prefixes and preloading
+  - Color schemes
+  - Favicon
+
+  @example
+    {%- render 'head' -%}
+{%- endcomment -%}
+
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<meta
+  name="theme-color"
+  content="{{- settings.theme_color.settings.background | default: settings.default_color_scheme.settings.background -}}"
+>
+<meta
+  name="robots"
+  content="{%- if template.suffix == 'hidden' or template.suffix == 'noindex' or [request.page_type].metafields.seo.hidden or search.terms != blank -%}no{%- endif -%}index,follow"
+>
+
+<meta name="author" content="Made by Field — digital design agency">
+<link rel="author" href="https://madebyfield.co.uk">
+
+<link rel="canonical" href="{{- canonical_url -}}">
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+{%- capture prefix -%}{%- render 'asset-prefix' -%}{%- endcapture -%}
+<script>
+  window.prefix = {{ prefix | json }};
+</script>
+<link rel="stylesheet" href="https://use.typekit.net/ocq7rca.css">
+{{ 'main.js' | prepend: prefix | asset_url | preload_tag: as: 'script' }}
+{{ 'main.css' | prepend: prefix | asset_url | stylesheet_tag: preload: true }}
+{% render 'color-schemes' %}
+
+{%- unless settings.favicon == blank -%}
+  <link
+    rel="shortcut icon"
+    type="image/png"
+    href="{{- settings.favicon | image_url: width: 32, height: 32 -}}"
+  >
+  <link
+    rel="icon"
+    sizes="192x192"
+    href="{{- settings.favicon | image_url: width: 192, height: 192 -}}"
+  >
+  <link
+    rel="apple-touch-icon"
+    href="{{- settings.favicon | image_url: width: 32, height: 32 -}}"
+  >
+{%- endunless -%}
+
+<title>
+  {{- page_title -}}
+  {%- if current_tags %}
+    &ndash; tagged "{{ current_tags | join: ', ' }}"
+  {%- endif -%}
+  {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+  {%- unless page_title contains shop.name %} | {{ shop.name -}}{% endunless -%}
+</title>
+
+{% if page_description %}
+  <meta name="description" content="{{- page_description | escape -}}">
+{% endif %}
+
+{%- liquid
+  render 'meta-tags'
+  render 'microdata-schema'
+-%}
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+</script>
+
+<script>
+  window.settings = {
+    asset_url: '{{- 'app.js' | asset_url | split: 'app.js' | first -}}',
+    //asset_revision: asset_revision: `{%- render 'v' -%}`.trim(),
+  };
+
+  window.strings = {
+    error: {{- 'general.error' | t | json -}},
+    errorMessage: {{- 'general.error_message' | t | json -}},
+    thanks: {{- 'newsletter.success' | t | json -}},
+    addToCart: {{- 'product.add_to_cart' | t | json -}},
+    adding: {{- 'product.adding' | t | json -}},
+    added: {{- 'product.added' | t | json -}},
+    soldOut: {{- 'product.sold_out' | t | json -}},
+    unavailable: {{- 'product.unavailable' | t | json -}},
+    selectOptions: {{- 'product.select_options' | t | json -}},
+    outOfStock: {
+      success: {{- 'product.out_of_stock.success' | t | json -}},
+      error: {{- 'product.out_of_stock.error' | t | json -}},
+    },
+    newsletter: {
+      success: {{- 'newsletter.success' | t | json -}},
+      existing: {{- 'newsletter.existing' | t | json -}},
+      error: {{- 'newsletter.error' | t | json -}},
+    }
+  };
+</script>
+
+{% comment %}theme-check-disable SpaceInsideBraces{% endcomment %}
+<script>
+  if (typeof Shopify === 'undefined') Shopify = {};
+  
+  function debounce(fn, wait) {
+    let t;
+    return (...args) => {
+      clearTimeout(t);
+      t = setTimeout(() => fn.apply(this, args), wait);
+    };
+  }
+
+  Shopify.money_format = {{ shop.money_format | strip_html | json }};
+  Shopify.formatMoney = (cents, format) => {
+    if (typeof cents == 'string') {
+      cents = cents.replace('.', '');
+    }
+    var value = '';
+    var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+    var formatString = format || Shopify.money_format;
+
+    defaultOption = (opt, def) => {
+      return typeof opt == 'undefined' ? def : opt;
+    };
+
+    formatWithDelimiters = (number, precision, thousands, decimal) => {
+      precision = defaultOption(precision, 2);
+      thousands = defaultOption(thousands, ',');
+      decimal = defaultOption(decimal, '.');
+
+      if (isNaN(number) || number == null) {
+        return 0;
+      }
+
+      number = (number / 100.0).toFixed(precision);
+
+      var parts = number.split('.'),
+        dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands),
+        cents = parts[1] ? decimal + parts[1] : '';
+
+      return dollars + cents;
+    };
+
+    switch (formatString.match(placeholderRegex)[1]) {
+      case 'amount':
+        value = formatWithDelimiters(cents, 2);
+        break;
+      case 'amount_no_decimals':
+        value = formatWithDelimiters(cents, 0);
+        break;
+      case 'amount_with_comma_separator':
+        value = formatWithDelimiters(cents, 2, '.', ',');
+        break;
+      case 'amount_no_decimals_with_comma_separator':
+        value = formatWithDelimiters(cents, 0, '.', ',');
+        break;
+    }
+
+    return formatString.replace(placeholderRegex, value).replace(/(\.|,)00$/g, '');
+  };
+
+  Shopify.getSizedImage = (image, size = 'master') => {
+    if (!image) return false;
+    if (!image.match(/^http(s?):/ig)) image = `https:${image}`;
+    return image
+      .replace(/_(pico|icon|thumb|small|compact|medium|large|grande|original|1024x1024|2048x2048|master)+\./g, '.')
+      .replace(/\.jpg|\.png|\.gif|\.jpeg/g, function (extension) {
+        return '_' + size + extension;
+      });
+  };
+
+  Shopify.addToCart = (form) => {
+    const formData = new FormData(form);
+    const buttons = form.querySelectorAll('[type="submit"]');
+    let previousText = window.strings.addToCart;
+
+    buttons.forEach(button => {
+      button.disabled = true;
+      button.textContent = window.strings.adding;
+    });
+
+    const tempButtonText = (text) => {
+      buttons.forEach(button => {
+        button.disabled = false;
+        button.textContent = text;
+
+        setTimeout(() => {
+          button.textContent = previousText;
+        }, 1000);
+      });
+    };
+
+    const purchase_option = form.querySelector('[name="purchase_option"]:checked');
+    if (purchase_option && purchase_option.value == 'once') formData.delete('selling_plan');
+    if (formData.get('properties[__shopify_send_gift_card_to_recipient]') === 'false') formData.delete('properties[__shopify_send_gift_card_to_recipient]');
+
+    fetch(routes.cart_add_url, {
+      method: 'POST',
+      body: new URLSearchParams(formData),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+    .then((response) => {
+      if (response.ok) {
+        const cart = response.json();
+        const json = form.querySelector('[type="application/json"]');
+
+        if (json) {
+          const product = JSON.parse(json.textContent);
+          if (!product.url) product.url = `https://${location.host}/products/${product.handle}`;
+
+          this.dispatchEvent(
+            new CustomEvent('cart:added', { bubbles: true, detail: { item: cart, product: product } })
+          );
+
+          if (window.Shopify?.customerPrivacy?.userCanBeTracked()) {
+            /* Klaviyo */
+            try {
+              window._learnq = window._learnq || [];
+              var item = {
+                Name: product.title,
+                Title: product.title,
+                ItemId: product.id,
+                ProductId: product.id,
+                Price: product.price / 100.0,
+                CompareAtPrice: product.compare_at_price_max / 100.0,
+                Categories: product.collections || '',
+                ImageUrl: 'https:' + Shopify.getSizedImage(product.featured_image, '1024x'),
+                Url: product.url,
+                Metadata: {
+                  Brand: product.vendor,
+                  Price: product.price / 100.0,
+                  CompareAtPrice: product.compare_at_price / 100.0,
+                },
+              };
+              window._learnq.push(['track', 'Added to Cart', item]);
+            } catch (e) {
+              console.warn('Klaviyo add to cart event failed.');
+            }
+
+            /* GA4 */
+            try {
+              window.dataLayer = window.dataLayer || [];
+              var item = {
+                items: [
+                  {
+                    item_id: product.id,
+                    item_variant: '',
+                    item_name: product.title,
+                    price: Shopify.formatMoney(product.price),
+                    item_brand: product.vendor,
+                    item_category: product.type,
+                    item_list_name: '',
+                    description: '',
+                    imageURL: Shopify.getSizedImage(product.featured_image, '1024x'),
+                    productURL: product.url,
+                  },
+                ],
+              };
+              window.dataLayer.push({ event: 'add_to_cart', item });
+            } catch (e) {
+              console.warn('GA4 add to cart event failed.');
+            }
+          }
+        } else {
+          this.dispatchEvent(new CustomEvent('cart:added', { bubbles: true, detail: { item: cart } }));
+        }
+
+        tempButtonText(window.strings.added);
+      } else {
+        console.error(response);
+        tempButtonText(window.strings.error);
+        return form.submit();
+      }
+    })
+    .catch((error) => {
+      console.error(response);
+      tempButtonText(window.strings.error);
+      return form.submit();
+    });
+  };
+</script>
+{% comment %}theme-check-enable SpaceInsideBraces{% endcomment %}

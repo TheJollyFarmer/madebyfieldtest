@@ -1,0 +1,9 @@
+@layer components {
+  .slider {
+    @apply flex items-stretch overflow-x-auto overflow-y-hidden scrollbar-none snap-mandatory snap-x scroll-smooth;
+  }
+
+  .slider-y {
+    @apply overflow-x-hidden overflow-y-auto snap-y;
+  }
+}

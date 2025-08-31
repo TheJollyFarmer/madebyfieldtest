@@ -1,0 +1,21 @@
+{%- comment -%}
+  Outputs product data as JSON with additional URL and options fields.
+  Used for JavaScript-based product functionality and AJAX operations.
+
+  @param {Object} product - Product object to serialize
+
+  @example
+    <script>
+      const productData = {%- render 'product-json', product: product -%};
+    </script>
+{%- endcomment -%}
+
+{%- liquid
+  assign json = product | json
+  assign length = json.size | minus: 1
+  assign options_with_values = product.options_with_values | json
+  assign json = json | slice: 0, length | append: ',"url":"' | append: product.url | append: '","options_with_values":' | append: options_with_values | append: ',"metafield_title":' | append: metafield_title
+  assign collections = product.collections | map: 'title' | json
+  assign json = json | append: ',"collections":' | append: collections
+  echo json | append: '}'
+-%}

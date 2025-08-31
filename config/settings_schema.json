@@ -1,0 +1,132 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Made by Field",
+    "theme_version": "1",
+    "theme_author": "Field",
+    "theme_documentation_url": "https://madebyfield.co.uk/shopify",
+    "theme_support_url": "https://madebyfield.co.uk/contact"
+  },
+  {
+    "name": "General",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "placeholder",
+        "label": "Placeholder"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "color_scheme",
+        "id": "theme_color",
+        "label": "Theme colour",
+        "info": "Used for to define the background colour of the surrounding page user interface, i.e. above the header and below the footer."
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "instagram_token",
+        "label": "Instagram token",
+        "info": "[Generate](https://www.instant-tokens.com)"
+      },
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "Twitter",
+        "info": "https://twitter.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook",
+        "info": "https://facebook.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest",
+        "info": "https://pinterest.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "info": "http://instagram.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok",
+        "info": "https://tiktok.com/@shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr",
+        "label": "Tumblr",
+        "info": "https://shopify.tumblr.com"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat",
+        "label": "Snapchat",
+        "info": "https://www.snapchat.com/add/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube",
+        "info": "https://www.youtube.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo",
+        "label": "Vimeo",
+        "info": "https://vimeo.com/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_spotify",
+        "label": "Spotify"
+      }
+    ]
+  },
+  {
+    "name": "Klaviyo",
+    "settings": [
+      {
+        "type": "text",
+        "id": "klaviyo_account_id",
+        "label": "Account ID"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_list_id",
+        "label": "List ID"
+      },
+      {
+        "type": "checkbox",
+        "id": "klaviyo_bis",
+        "label": "Enable back in stock signup?",
+        "info": "A ‘back in stock’ flow is also required."
+      },
+      {
+        "type": "checkbox",
+        "id": "klaviyo_sms",
+        "label": "Enable SMS?",
+        "info": "SMS must also be setup and enabled within Klaviyo."
+      }
+    ]
+  }
+]

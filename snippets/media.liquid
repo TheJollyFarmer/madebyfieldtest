@@ -1,0 +1,29 @@
+{%- comment -%}
+  Renders media objects (images or videos) using appropriate snippets.
+  
+  @param {Object} media - Media object to render (can be image or video)
+  @param {String} loading - Loading strategy: 'lazy' or 'eager' (default: 'lazy')
+  @param {String} class - CSS classes to apply to the media element
+  @param {Number} factor - Size factor for desktop viewport
+  @param {Number} mobile_factor - Size factor for mobile viewport
+  @param {String} fetch_priority - Fetch priority: 'auto', 'high', or 'low'
+  @param {Boolean} muted - Whether video should be muted (video only)
+  @param {Boolean} autoplay - Whether video should autoplay (video only)
+  @param {Boolean} controls - Whether to show video controls (video only)
+  
+  @example
+    {%- render 'media', 
+        media: product.featured_media,
+        class: 'product-media',
+        loading: 'eager',
+        factor: 0.8 -%}
+{%- endcomment -%}
+
+{%- liquid
+  case media.media_type
+    when 'image'
+      render 'image', image: media, loading: loading, class: class, factor: factor, mobile_factor: mobile_factor, fetch_priority: fetch_priority
+    when 'video'
+      render 'video', video: media, loading: loading, class: class, factor: factor, mobile_factor: mobile_factor, fetch_priority: fetch_priority, muted: muted, autoplay: autoplay, controls: controls
+  endcase
+-%}

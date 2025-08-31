@@ -1,0 +1,28 @@
+{
+  "current": {
+    "color_schemes": {
+      "primary": {
+        "settings": {
+          "background": "",
+          "contrast": "",
+          "text": "",
+          "links": "",
+          "icons": "",
+          "border": "",
+          "primary_button_background": "",
+          "primary_button_border": "",
+          "primary_button_text": "",
+          "primary_button_background_hover": "",
+          "primary_button_border_hover": "",
+          "primary_button_text_hover": "",
+          "secondary_button_background": "",
+          "secondary_button_border": "",
+          "secondary_button_text": "",
+          "secondary_button_background_hover": "",
+          "secondary_button_border_hover": "",
+          "secondary_button_text_hover": ""
+        }
+      }
+    }
+  }
+}

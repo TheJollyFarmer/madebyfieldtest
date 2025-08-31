@@ -1,0 +1,70 @@
+{%- liquid
+  assign title = section.settings.title
+  assign products = section.blocks
+-%}
+
+<div class="product-grid container">
+  {%- if title != blank -%}
+    <h2 class="product-grid__title">
+      {{- title -}}
+    </h2>
+  {%- endif -%}
+  <div class="product-grid__grid">
+    {%- for product in products -%}
+      {% render 'card-product', card: product %}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Grid",
+  "tag": "section",
+  "class": "sections",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price"
+        },
+        {
+          "type": "text",
+          "id": "colour",
+          "label": "Colour"
+        },
+        {
+          "type": "text",
+          "id": "sizes",
+          "label": "Sizes"
+        },
+        {
+          "type": "checkbox",
+          "id": "bestseller",
+          "label": "Bestseller"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

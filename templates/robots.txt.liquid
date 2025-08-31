@@ -1,0 +1,26 @@
+{% comment %}theme-check-disable UndefinedObject{% endcomment %}
+{% for group in robots.default_groups %}
+  {{ group.user_agent }}
+
+  {% for rule in group.rules %}
+    {{ rule }}
+  {% endfor %}
+
+  {% if group.user_agent.value == '*' %}
+    {{ 'Disallow: /policies' }}
+    {{ 'Disallow: /*/policies' }}
+    {{ 'Disallow: /pages/size-guide-*' }}
+    {{ 'Disallow: /*/pages/size-guide-*' }}
+    {{ 'Disallow: /collections' }}
+    {{ 'Disallow: /*/collections' }}
+    {{ 'Allow: /collections/*' }}
+    {{ 'Allow: /*/collections/*' }}
+    {{ 'Disallow: /cart' }}
+    {{ 'Disallow: /*/cart' }}
+  {% endif %}
+
+  {% if group.sitemap != blank %}
+    {{ group.sitemap }}
+  {% endif %}
+{% endfor %}
+{% comment %}theme-check-enable UndefinedObject{% endcomment %}

@@ -1,0 +1,19 @@
+@layer components {
+  .rte-table,
+  .rte-table table,
+  .rte table {
+    @apply w-full;
+    @apply overflow-x-auto;
+    @apply overflow-y-visible;
+    @apply scrollbar-none;
+    @apply tablet:-ml-offset;
+    @apply tablet:w-screen;
+    @apply tablet:px-offset;
+  }
+
+  .rte table td,
+  .rte table th {
+    @apply text-center;
+    @apply border;
+  }
+}

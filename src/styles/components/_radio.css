@@ -1,0 +1,5 @@
+@layer components {
+  .radio {
+    @apply form-field;
+  }
+}

@@ -1,0 +1,5 @@
+@layer components {
+  .checkbox {
+    @apply form-field;
+  }
+}

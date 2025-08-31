@@ -1,0 +1,16 @@
+{%- comment -%}
+  Renders a client-side redirect page with meta refresh and JavaScript fallback.
+  
+  @param {String} url - URL to redirect to (default: routes.root_url)
+  
+  @example
+    {%- render 'redirect', url: '/collections/sale' -%}
+{%- endcomment -%}
+
+{%- liquid
+  if url == blank
+    assign url = routes.root_url
+  endif
+
+  echo '<html><head><title>Redirecting...</title><meta name="robots" content="noindex,follow"><meta http-equiv="refresh" content="0; url=%url"><script>location.replace("%url");</script></head><body><a href="%url">Redirecting...</a></body></html>' | replace: '%url', url
+-%}

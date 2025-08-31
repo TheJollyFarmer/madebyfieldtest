@@ -1,0 +1,40 @@
+{%- comment -%}
+  Loads and initializes the International Telephone Input (intl-tel-input) library.
+  Provides enhanced telephone number input with country selection and formatting.
+  
+  This snippet automatically:
+  - Loads intlTelInput.js and CSS files
+  - Configures styles for proper display
+  - Sets up flag icons with retina support
+  - Applies right-to-left layout adjustments
+  
+  @example
+    {%- render 'intl-tel-input' -%}
+    <input type="tel" id="phone" />
+{%- endcomment -%}
+
+<script>
+  (function() {
+    var itiJs = document.createElement('script');
+    itiJs.async = true;
+    itiJs.src = '{{- 'intlTelInput.js' | asset_url -}}';
+    document.getElementsByTagName('head')[0].appendChild(itiJs);
+  })();
+  (function() {
+    var itiCss = document.createElement('link');
+    itiCss.href = '{{- 'intlTelInput.css' | asset_url -}}';
+    itiCss.rel = 'stylesheet';
+    itiCss.type = 'text/css';
+    document.getElementsByTagName('head')[0].appendChild(itiCss);
+  })();
+</script>
+{%- style -%}
+  .iti { width: 100%; }
+  .iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] { padding-left: var(--spacing-2xs); padding-right: 52px; }
+  .iti--allow-dropdown .iti__flag-container, .iti--separate-dial-code .iti__flag-container { left: auto; right: 0; }
+  .iti__country-list { right: 0; }
+  .iti__flag { background-image: url('{{ 'flags.png' | asset_url }}'); }
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .iti__flag { background-image: url('{{ 'flags@2x.png' | asset_url }}'); }
+  }
+{%- endstyle -%}

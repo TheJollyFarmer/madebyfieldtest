@@ -1,0 +1,38 @@
+@layer components {
+  .button {
+    @apply appearance-none;
+    @apply transition-colors;
+    @apply outline-none;
+    @apply leading-none;
+
+    @apply inline-flex;
+    @apply items-center;
+    @apply justify-center;
+    @apply cursor-pointer;
+    @apply disabled:pointer-events-none;
+    @apply border;
+
+    /*
+    @apply px-8;
+    @apply py-4;
+    */
+  }
+
+  .button--primary {
+    @apply bg-primary-button-background;
+    @apply border-primary-button-border;
+    @apply text-primary-button-text;
+    @apply hover:bg-primary-button-background-hover;
+    @apply hover:border-primary-button-border-hover;
+    @apply hover:text-primary-button-text-hover;
+  }
+
+  .button--secondary {
+    @apply bg-secondary-button-background;
+    @apply border-secondary-button-border;
+    @apply text-secondary-button-text;
+    @apply hover:bg-secondary-button-background-hover;
+    @apply hover:border-secondary-button-border-hover;
+    @apply hover:text-secondary-button-text-hover;
+  }
+}

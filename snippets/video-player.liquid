@@ -1,0 +1,37 @@
+{%- comment -%}
+  Renders an interactive video player with play button overlay and custom controls.
+  
+  @param {String} video - HTML video element markup to wrap
+  @param {String} loading - Loading strategy: 'lazy' or 'eager' (default: 'lazy')
+  @param {String} class - CSS classes to apply to the video element (default: 'block w-full')
+  @param {String} image_size - Size for the video thumbnail (default: '1000x')
+  
+  @example
+    {%- render 'video-player', video: video_markup, class: 'hero-video-player' -%}
+{%- endcomment -%}
+
+{%- unless video == blank -%}
+  {%- liquid
+    assign loading = loading | default: 'lazy'
+    assign class = class | default: 'block w-full'
+    assign image_size = image_size | default: '1000x'
+  -%}
+  <video-player class="relative block cursor-pointer" data-async>
+    {{- video -}}
+    <button
+      class="absolute z-20 inset-0 flex items-center justify-center"
+      aria-label="{{- 'general.play' | t | escape -}}"
+      data-hide
+    >
+      {%- render 'svg', svg: 'play-video' -%}
+    </button>
+    <div class="absolute z-10 inset-0 bg-overlay" data-hide></div>
+  </video-player>
+
+  {%- capture prefix -%}{%- render 'asset-prefix' -%}{%- endcapture -%}
+  <script
+    src="{{- 'video-player.js' | prepend: prefix | asset_url -}}"
+    type="module"
+    defer
+  ></script>
+{%- endunless %}

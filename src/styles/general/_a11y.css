@@ -1,0 +1,6 @@
+@layer base {
+  *:focus-visible {
+    @apply outline outline-2 outline-offset-8;
+    outline-color: color-mix(in srgb, currentColor 50%, transparent);
+  }
+}

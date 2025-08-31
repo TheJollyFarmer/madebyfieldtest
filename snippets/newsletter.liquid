@@ -1,0 +1,47 @@
+{%- comment -%}
+  Renders a newsletter signup form with email validation and success/error states.
+  
+  @param {String} class - Additional CSS classes to apply to the form (default: '')
+  @param {String} id - Form ID attribute (default: section.id)
+  
+  @example
+    {%- render 'newsletter', class: 'newsletter-form', id: 'footer-newsletter' -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign class = class | default: '' | append: ' relative'
+  assign id = id | default: section.id
+-%}
+{%- form 'customer', class: class, id: id -%}
+  <input type="hidden" name="contact[tags]" value="newsletter">
+  <input type="hidden" name="contact[accepts_marketing]" value="true">
+  {%- if form.posted_successfully? -%}
+    <strong>
+      {{- 'newsletter.success' | t -}}
+    </strong>
+  {%- else -%}
+    {%- render 'form-errors', form: form -%}
+    <div class="relative">
+      <input
+        type="email"
+        name="contact[email]"
+        placeholder="{{- 'newsletter.placeholder' | t | escape -}}"
+        aria-label="{{- 'newsletter.placeholder' | t | escape -}}"
+        aria-required="true"
+        autocorrect="off"
+        autocapitalize="off"
+        autocomplete="email"
+        value="{{- form.email -}}"
+        required
+        class="input input--transparent w-full relative z-10 pr-[80px]"
+      >
+      <button
+        type="submit"
+        class="appearance-none outline-none absolute z-20 top-0 right-0 bottom-0 p-4 flex items-center font-button text-button"
+        aria-label="{{- 'newsletter.submit' | t | escape -}}"
+      >
+        {{- 'newsletter.submit' | t -}}
+      </button>
+    </div>
+  {% endif %}
+{%- endform -%}

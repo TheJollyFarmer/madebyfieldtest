@@ -1,0 +1,29 @@
+{%- comment -%}
+  Renders a country/region selector form for international localization.
+  Only displays if multiple countries are available in the store.
+  
+  @example
+    {%- render 'localization' -%}
+{%- endcomment -%}
+
+{%- if localization.available_countries.size > 1 -%}
+  {%- form 'localization', onChange: 'this.submit()' -%}
+    {%- assign iso_code = localization.country.iso_code -%}
+    <select
+      name="country_code"
+      onChange="this.form.submit()"
+      class="max-w-full inline-block select"
+    >
+      {%- for country in localization.available_countries -%}
+        <option
+          value="{{- country.iso_code -}}"
+          {% if country.iso_code == iso_code %}
+            selected
+          {% endif %}
+        >
+          {{- country.name -}}
+        </option>
+      {%- endfor -%}
+    </select>
+  {%- endform -%}
+{%- endif -%}

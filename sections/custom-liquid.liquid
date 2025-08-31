@@ -1,0 +1,27 @@
+{%- unless section.settings.full_width -%}<div class="px-offset">{%- endunless -%}
+{{ section.settings.custom_liquid }}
+{%- unless section.settings.full_width -%}</div>{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Custom Liquid",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    },
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "Custom Liquid"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Liquid"
+    }
+  ]
+}
+{% endschema %}

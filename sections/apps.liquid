@@ -1,0 +1,32 @@
+{%- unless section.settings.full_width -%}<div class="px-offset">{%- endunless -%}
+{%- liquid
+  for block in section.blocks
+    render block
+  endfor
+-%}
+{%- unless section.settings.full_width -%}</div>{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Apps",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Apps"
+    }
+  ]
+}
+{% endschema %}

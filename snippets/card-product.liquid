@@ -1,0 +1,54 @@
+{%- liquid
+  assign image = block.settings.image
+  assign title = block.settings.title
+  assign price = block.settings.price
+  assign colour = block.settings.colour
+  assign sizes = block.settings.sizes | split: ','
+  assign bestseller = block.settings.bestseller
+-%}
+
+<div class="card-product">
+  {%- if image -%}
+    <div class="card-product__image">
+      {% render 'image',
+        image: image,
+        factor: 0.25
+      %}
+    </div>
+    {%- if sizes != blank -%}
+      <ul class="card-product__sizes">
+        {%- for size in sizes -%}
+          <li class="card-product__size">
+            {{- size -}}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  {%- endif -%}
+  <div class="card-product__content">
+    <div class="card-product__header">
+      <div class="card-product__heading">
+        {%- if title != blank -%}
+          <h3 class="card-product__title">
+            {{- title -}}
+          </h3>
+        {%- endif -%}
+        {%- if colours != blank -%}
+          <p class="card-product__colours">
+            {{- colours -}}
+          </p>
+        {%- endif -%}
+      </div>
+      {%- if colour -%}
+        <div class="card-product__colour">
+          {{- colour -}}
+        </div>
+      {%- endif -%}
+    </div>
+    {%- if price != blank -%}
+      <div class="card-product__price">
+        {{- price -}}
+      </div>
+    {%- endif -%}
+  </div>
+</div>

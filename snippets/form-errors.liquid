@@ -1,0 +1,27 @@
+{%- comment -%}
+  Renders form validation errors with proper formatting.
+
+  @param {Object} form - The form object containing errors
+
+  @example
+    {%- render 'form-errors', form: form -%}
+{%- endcomment -%}
+
+{%- if form.errors -%}
+  <div class="my-4">
+    <div class="mt-2 rte">
+      {%- for field in form.errors -%}
+        <p>
+          {%- if field == 'form' -%}
+            {{ form.errors.messages[field] }}
+          {%- else -%}
+            <strong>
+              {{- form.errors.translated_fields[field] | capitalize -}}
+            </strong>
+            {{ form.errors.messages[field] }}
+          {%- endif -%}
+        </p>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}

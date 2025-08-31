@@ -1,0 +1,5 @@
+@layer components {
+  .select {
+    @apply form-field;
+  }
+}

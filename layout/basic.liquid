@@ -1,0 +1,20 @@
+<!doctype html>
+<html
+  lang="{{- request.locale.iso_code -}}"
+  class="{% unless template.directory == blank or template.directory == template.name %}template-{{ template.directory }} {% endunless %}template-{{ template.name }}"
+>
+  <head>
+    {%- render 'head' -%}
+    {{ content_for_header }}
+  </head>
+
+  <body class="min-h-screen font-sans text-base {% render 'color-scheme', color_scheme: settings.default_color_scheme %}">
+    {{ content_for_layout }}
+    {%- capture prefix -%}{%- render 'asset-prefix' -%}{%- endcapture -%}
+    <script
+      src="{{- 'main.js' | prepend: prefix | asset_url -}}"
+      type="module"
+      defer
+    ></script>
+  </body>
+</html>

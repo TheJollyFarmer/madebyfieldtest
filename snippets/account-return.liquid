@@ -1,0 +1,16 @@
+{%- comment -%}
+  Renders a "Return to Account" button with proper styling and grid positioning.
+  
+  @example
+    {%- render 'account-return' -%}
+{%- endcomment -%}
+
+<div class="col-start-4 col-span-6 text-center mt-2xl">
+  <a
+    href="{{- routes.account_url -}}"
+    class="button button--primary inline-block"
+    aria-label="{{- 'customer.account.return' | t | escape -}}"
+  >
+    {{- 'customer.account.return' | t -}}
+  </a>
+</div>
