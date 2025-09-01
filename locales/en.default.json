@@ -139,7 +139,8 @@
       "add": "Add to favourites",
       "added": "Added to favourites",
       "login_html": "<p><a href=\"/account/login\">Login to save.</a></p>"
-    }
+    },
+    "bestseller": "Bestseller"
   },
   "collection": {
     "all": "All",
@@ -171,7 +172,8 @@
     "count": {
       "one": "{{ count }} product",
       "other": "{{ count }} products"
-    }
+    },
+    "shop_now": "Shop now"
   },
   "customer": {
     "account": {

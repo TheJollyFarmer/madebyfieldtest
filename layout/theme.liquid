@@ -8,7 +8,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="min-h-screen font-sans text-base {% render 'color-scheme', color_scheme: settings.default_color_scheme %}">
+  <body class="min-h-screen font-sans text-base h-[300vh] mt-10 {% render 'color-scheme', color_scheme: settings.default_color_scheme %}">
     <a href="#Content" class="sr-only">
       {{- 'accessibility.skip_to_text' | t -}}
     </a>
@@ -20,14 +20,10 @@
 
       {%- capture prefix -%}{%- render 'asset-prefix' -%}{%- endcapture -%}
       <script
-        src="{{- 'custom-component.js' | prepend: prefix | asset_url -}}"
+        src="{{- 'sticky-header.js' | prepend: prefix | asset_url -}}"
         type="module"
         defer
       ></script>
-      <custom-component>
-        I am an example component. This is the format to create a custom component. All components
-        within `src/javascript/components` will be bundled into the `assets` folder.
-      </custom-component>
     </main>
 
     {%- liquid

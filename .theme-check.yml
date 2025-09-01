@@ -1,0 +1,15 @@
+ignore:
+  - default.json
+  - default.schema.json
+
+MatchingTranslations:
+  enabled: false
+
+NestedSnippet:
+  max_nesting_level: 4
+
+LiquidHTMLParsingError:
+  severity: warning
+
+LiquidHTMLSyntaxError:
+  severity: warning

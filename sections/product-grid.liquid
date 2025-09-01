@@ -3,15 +3,34 @@
   assign products = section.blocks
 -%}
 
-<div class="product-grid container">
-  {%- if title != blank -%}
-    <h2 class="product-grid__title">
-      {{- title -}}
-    </h2>
-  {%- endif -%}
-  <div class="product-grid__grid">
+<div
+  class="flex flex-col gap-20 pb-20"
+  data-section
+>
+  <sticky-header class="desktop:h-[2.4375rem]">
+    <div
+      class="justify-between font-normal leading-[1.3] text-[1.375rem] px-5 hidden desktop:flex bg-[white] z-10"
+      data-sticky-header
+    >
+      {%- if title != blank -%}
+        <h2>
+          {{- title -}}
+        </h2>
+      {%- endif -%}
+      <a
+        href="/"
+        class="product-grid__link"
+      >
+        {{- 'collection.shop_now' | t -}}
+      </a>
+    </div>
+  </sticky-header>
+  <div
+    class="flex gap-0.5 overflow-auto desktop:overflow-hidden snap-x snap-mandatory pb-2"
+    data-sticky-trigger
+  >
     {%- for product in products -%}
-      {% render 'card-product', card: product %}
+      {%- render 'card-product', card: product -%}
     {%- endfor -%}
   </div>
 </div>
@@ -69,6 +88,11 @@
           "label": "Bestseller"
         }
       ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid"
     }
   ]
 }

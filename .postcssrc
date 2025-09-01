@@ -1,0 +1,18 @@
+{
+  "plugins": {
+    "postcss-import-ext-glob": true,
+    "postcss-import": true,
+    "tailwindcss/nesting": true,
+    "tailwindcss": true,
+    "cssnano": {
+      "discardComments": {
+        "removeAll": true
+      },
+      "autoprefixer": true,
+      "normalizeWhitespace": false,
+      "discardUnused": true,
+      "mergeIdents": true,
+      "reduceIdents": true
+    }
+  }
+}

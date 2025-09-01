@@ -1,0 +1,35 @@
+name: Build
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "package-lock.json"
+      - "src/**"
+      - "**.liquid"
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - "package-lock.json"
+      - "src/**"
+      - "**.liquid"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.x"
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Commit and Push changes
+        uses: EndBug/add-and-commit@v7.2.1
+        with:
+          author_name: "📦 Shopify Parcel"
+          message: "Build"

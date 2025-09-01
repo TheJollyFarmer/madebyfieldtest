@@ -1,53 +1,65 @@
 {%- liquid
-  assign image = block.settings.image
-  assign title = block.settings.title
-  assign price = block.settings.price
-  assign colours = block.settings.colours
-  assign colour = block.settings.colour
-  assign sizes = block.settings.sizes | split: ','
-  assign bestseller = block.settings.bestseller
+  assign image = card.settings.image
+  assign title = card.settings.title
+  assign price = card.settings.price
+  assign colours = card.settings.colours
+  assign colour = card.settings.colour
+  assign sizes = card.settings.sizes | split: ','
+  assign bestseller = card.settings.bestseller
 -%}
 
-<div class="card-product">
+<div class="group flex flex-col gap-2.5 desktop:gap-3 w-2/3 desktop:w-3/12 flex-shrink-0 snap-start">
   {%- if image -%}
-    <div class="card-product__image">
+    <div class="relative overflow-hidden">
+      <div class="absolute p-3 desktop:p-2.5 inset-0 flex flex-col justify-between">
+        <div class="flex items-center justify-between desktop:opacity-0 supports-hover:group-hover:opacity-100 transition-opacity">
+          {%- if bestseller != blank -%}
+            <div class="px-2.5 py-1 items-center justify-center bg-[#084] text-xs text-[white]">
+              {{- 'product.bestseller' | t -}}
+            </div>
+          {%- endif -%}
+          <div class="hidden ms-auto desktop:block cursor-pointer">
+            {% render 'svg', svg: 'wishlist' %}
+          </div>
+        </div>
+        {%- if sizes != blank -%}
+          <ul class="relative flex gap-3.5 items-center justify-center bottom-0 left-0 right-0 px-2.5 h-12 bg-[white] transform translate-y-16 transition-transform supports-hover:group-hover:translate-y-0">
+            {%- for size in sizes -%}
+              <li class="text-sm supports-hover:hover:underline cursor-pointer{%- if forloop.index == 3 %} text-[#B4B4B4]{%- endif -%}">
+                {{- size -}}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
       {% render 'image',
         image: image,
         factor: 0.25
       %}
     </div>
-    {%- if sizes != blank -%}
-      <ul class="card-product__sizes">
-        {%- for size in sizes -%}
-          <li class="card-product__size">
-            {{- size -}}
-          </li>
-        {%- endfor -%}
-      </ul>
-    {%- endif -%}
   {%- endif -%}
-  <div class="card-product__content">
-    <div class="card-product__header">
-      <div class="card-product__heading">
+  <div class="flex flex-col gap-3 desktop:gap-3.5 px-3 desktop:px-5">
+    <div>
+      <div class="flex items-center justify-between">
         {%- if title != blank -%}
-          <h3 class="card-product__title">
+          <h3 class="text-[0.8125rem] font-normal">
             {{- title -}}
           </h3>
         {%- endif -%}
         {%- if colours != blank -%}
-          <p class="card-product__colours">
+          <p class="text-sm text-[black] opacity-[0.54] desktop:text-black desktop:opacity-0 supports-hover:group-hover:opacity-100 transition-opacity">
             {{- colours -}}
           </p>
         {%- endif -%}
       </div>
-      {%- if colour -%}
-        <div class="card-product__colour">
+      {%- if colour != blank -%}
+        <div class="text-sm">
           {{- colour -}}
         </div>
       {%- endif -%}
     </div>
     {%- if price != blank -%}
-      <div class="card-product__price">
+      <div class="text-sm">
         {{- price -}}
       </div>
     {%- endif -%}

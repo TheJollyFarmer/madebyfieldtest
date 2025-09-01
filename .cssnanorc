@@ -1,0 +1,15 @@
+{
+  "preset": [
+    "default",
+    {
+      "discardComments": {
+        "removeAll": true
+      },
+      "autoprefixer": true,
+      "normalizeWhitespace": false,
+      "discardUnused": true,
+      "mergeIdents": true,
+      "reduceIdents": true
+    }
+  ]
+}

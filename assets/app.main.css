@@ -566,6 +566,16 @@ b,strong{
   font-weight:400;
 }
 
+.container{
+  width:100%;
+}
+
+@media (width >= 1025px){
+  .container{
+    max-width:1025px;
+  }
+}
+
 .button{
   align-items:center;
   appearance:none;
@@ -881,6 +891,10 @@ b,strong{
   justify-content:space-between;
 }
 
+.gap-8{
+  gap:2rem;
+}
+
 .gap-gutter{
   gap:var(--spacing-gutter);
 }
@@ -1007,6 +1021,11 @@ b,strong{
     --columns:2;
     --spacing-header:3.375rem;
   }
+}
+
+.product-grid__grid{
+  display:flex;
+  gap:8px;
 }
 
 .empty\:hidden:empty{
